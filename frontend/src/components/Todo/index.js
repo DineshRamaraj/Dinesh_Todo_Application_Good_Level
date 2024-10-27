@@ -46,11 +46,11 @@ const Todo = () => {
     if (jwtToken === undefined) {
       navigate("/login");
     }
-  }, [jwtToken, navigate]);
+  });
 
-  useEffect(() => {
+  const getTodoList = async () => {
     const userId = localStorage.getItem("user_id");
-    const getTodoList = async () => {
+    
       setTodoIsLoading(false);
       const apiUrl = `https://dintodoapi.onrender.com/api/${userId}/todo`;
 
@@ -58,7 +58,7 @@ const Todo = () => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${jwtToken}`,
+          "Authorization": `Bearer ${jwtToken}`,
         },
       };
 
@@ -71,8 +71,11 @@ const Todo = () => {
       setTodoIsLoading(false);
     };
 
+  useEffect(() => {
+    
+
     getTodoList();
-  }, [todoList, mainContent, jwtToken, navigate]);
+  });
 
   const userId = localStorage.getItem("user_id");
 
@@ -142,7 +145,7 @@ const Todo = () => {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${jwtToken}`,
+        "Authorization": `Bearer ${jwtToken}`,
       },
       body: JSON.stringify(userDetails),
     };
