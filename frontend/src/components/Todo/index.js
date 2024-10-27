@@ -5,6 +5,7 @@ import Cookies from "js-cookie";
 import { toast } from "react-hot-toast";
 import TodoItem from "../TodoItem";
 import { IoMdClose } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
 
 const uuid = shortUUID.generate;
 
@@ -37,12 +38,21 @@ const Todo = () => {
   const [mainContent, setMainContent] = useState("");
   //   console.log(inputHandle);
 
+  
+  const navigate = useNavigate();
+  const jwtToken = Cookies.get("jwt_token");
+
+  useEffect(() => {
+    if (jwtToken === undefined) {
+      navigate("/login");
+    }
+  }, [jwtToken, navigate]);
+
   useEffect(() => {
     const userId = localStorage.getItem("user_id");
-    const jwtToken = Cookies.get("jwt_token");
     const getTodoList = async () => {
       setTodoIsLoading(false);
-      const apiUrl = `http://localhost:5000/api/${userId}/todo`;
+      const apiUrl = `https://dintodoapi.onrender.com/api/${userId}/todo`;
 
       const options = {
         method: "GET",
@@ -62,16 +72,15 @@ const Todo = () => {
     };
 
     getTodoList();
-  }, [todoList, mainContent]);
+  }, [todoList, mainContent, jwtToken, navigate]);
 
   const userId = localStorage.getItem("user_id");
-  const jwtToken = Cookies.get("jwt_token");
 
   const submitAddForm = async (e) => {
     e.preventDefault();
     setIsLoading(true);
 
-    const apiUrl = `http://localhost:5000/api/${userId}/todo`;
+    const apiUrl = `https://dintodoapi.onrender.com/api/${userId}/todo`;
 
     const userDetails = {
       title: inputHandle.title,
@@ -119,7 +128,7 @@ const Todo = () => {
 
     const todoId = localStorage.getItem("todoId");
 
-    const apiUrl = `http://localhost:5000/api/${userId}/todo/${todoId}`;
+    const apiUrl = `https://dintodoapi.onrender.com/api/${userId}/todo/${todoId}`;
 
     const userDetails = {
       title: inputHandle.title,
@@ -160,7 +169,7 @@ const Todo = () => {
 
     const todoId = localStorage.getItem("todoId");
 
-    const apiUrl = `http://localhost:5000/api/${userId}/todo/${todoId}`;
+    const apiUrl = `https://dintodoapi.onrender.com/api/${userId}/todo/${todoId}`;
 
     const options = {
       method: "DELETE",

@@ -24,7 +24,7 @@ const Login = () => {
     event.preventDefault();
     setIsLoading(true);
 
-    const apiUrl = "http://localhost:5000/api/user/login";
+    const apiUrl = "https://dintodoapi.onrender.com/api/user/login";
 
     const userDetails = {
       email: inputHandle.email,
