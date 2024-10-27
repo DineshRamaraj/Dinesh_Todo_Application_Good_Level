@@ -6,6 +6,7 @@ import { toast } from "react-hot-toast";
 import TodoItem from "../TodoItem";
 import { IoMdClose } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
+import EmptyList from "../EmtpyItem";
 
 const uuid = shortUUID.generate;
 
@@ -38,39 +39,36 @@ const Todo = () => {
   const [mainContent, setMainContent] = useState("");
   //   console.log(inputHandle);
 
-  
   const navigate = useNavigate();
   const jwtToken = Cookies.get("jwt_token");
 
-
   const getTodoList = async () => {
     const userId = localStorage.getItem("user_id");
-    
-      setTodoIsLoading(false);
-      const apiUrl = `https://dintodoapi.onrender.com/api/${userId}/todo`;
 
-      const options = {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${jwtToken}`,
-        },
-      };
+    setTodoIsLoading(false);
+    const apiUrl = `https://dintodoapi.onrender.com/api/${userId}/todo`;
 
-      const response = await fetch(apiUrl, options);
-      const data = await response.json();
-
-      if (response.ok === true) {
-        setTodoList(data.todo_list);
-      }
-      setTodoIsLoading(false);
+    const options = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${jwtToken}`,
+      },
     };
 
-  useEffect(() => {
+    const response = await fetch(apiUrl, options);
+    const data = await response.json();
 
+    if (response.ok === true) {
+      setTodoList(data.todo_list);
+    }
+    setTodoIsLoading(false);
+  };
+
+  useEffect(() => {
     if (jwtToken === undefined) {
       navigate("/login");
-    }    
+    }
 
     getTodoList();
   }, []);
@@ -143,7 +141,7 @@ const Todo = () => {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${jwtToken}`,
+        Authorization: `Bearer ${jwtToken}`,
       },
       body: JSON.stringify(userDetails),
     };
@@ -346,7 +344,7 @@ const Todo = () => {
               >
                 Delete
               </button>
-              
+
               <button
                 type="button"
                 className="border border-red-400 text-black px-5 py-2 rounded-md"
@@ -361,7 +359,7 @@ const Todo = () => {
           </div>
         </div>
       )}
-
+      {todoList.length === 0 && <EmptyList />}
       {todoList.length > 0 && (
         <div className="pt-5 w-full">
           <div className="mb-4 flex justify-between items-center">
