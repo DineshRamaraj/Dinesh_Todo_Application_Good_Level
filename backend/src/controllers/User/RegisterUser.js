@@ -4,8 +4,8 @@ const bcrypt = require("bcrypt");
 const RegisterUser = async (req, res) => {
   // console.log("Level1");
   // console.log(req.body);
-  const { name, emailId, mobileNumber, password, confirmPassword } =
-    req.body.userDetails;
+  const { name, email, mobileNumber, password, confirmPassword } = req.body;
+  // console.log(req.body);
   try {
     if (name.length < 3) {
       throw new Error("Name must be at least 3 characters long.");
@@ -26,7 +26,7 @@ const RegisterUser = async (req, res) => {
       throw new Error("Invalid mobile number. It should be 10 digits long.");
     }
 
-    const existUser = await UserModel.findOne({ email_id: emailId });
+    const existUser = await UserModel.findOne({ email_id: email });
     // console.log(existUser);
 
     // if(existUser){
@@ -43,7 +43,7 @@ const RegisterUser = async (req, res) => {
 
     await UserModel.create({
       name,
-      email_id: emailId,
+      email_id: email,
       mobile_number: mobileNumber,
       password: hashedPassword,
     });

@@ -1,23 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import Header from "./components/Header";
+import { Toaster } from "react-hot-toast";
+import { Route, Routes } from "react-router-dom";
+import Login from "./components/Login/index";
+import Todo from "./components/Todo/index";
+import Register from "./components/Register/index";
+
+import "./App.css";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Toaster position="top-center" reverseOrder={false} />
+      <Header />
+      <Routes>
+        <Route exact path="/" element={<Todo />} />
+        <Route exact path="/register" element={<Register />} />
+        <Route exact path="/login" element={<Login />} />
+      </Routes>
     </div>
   );
 }

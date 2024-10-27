@@ -3,10 +3,9 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const LoginUser = async (req, res) => {
-  const { userDetails } = req.body;
-  const { emailId, password } = userDetails;
+  const { email, password } = req.body;
   try {
-    const existUser = await UserModel.findOne({ email_id: emailId });
+    const existUser = await UserModel.findOne({ email_id: email });
 
     if (!existUser) {
       return res
@@ -30,10 +29,13 @@ const LoginUser = async (req, res) => {
       expiresIn: "2d",
     });
 
+
     return res.status(200).json({
       status: "success",
       message: "Login Success",
       jwt_token: jwtToken,
+      user_id: existUser._id,
+      user_name: existUser.name
     });
   } catch (error) {
     return res.status(500).json({ status: "failure", message: error.message });

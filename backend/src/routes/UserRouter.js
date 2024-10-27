@@ -8,7 +8,7 @@ const UserRouter = express.Router();
 
 // User Routes
 
-UserRouter.post("/register", registerLimiter, RegisterUser, ErrorHandler);
-UserRouter.post("/login", LoginUser, ErrorHandler);
+UserRouter.post("/user/register", registerLimiter, RegisterUser, ErrorHandler);
+UserRouter.post("/user/login", LoginUser, ErrorHandler);
 
 module.exports = UserRouter;
