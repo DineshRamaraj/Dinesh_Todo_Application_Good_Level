@@ -359,45 +359,48 @@ const Todo = () => {
           </div>
         </div>
       )}
-      {todoList.length === 0 && <EmptyList />}
-      {todoList.length > 0 && (
-        <div className="pt-5 w-full">
-          <div className="mb-4 flex justify-between items-center">
-            <h1 className="text-slate-900 text-[roboto] font-medium">
-              TODOLIST:
-            </h1>
-            <button
-              type="button"
-              className="px-5 py-2 bg-blue-600 font-sans text-white text-[roboto] rounded-lg flex items-center"
-              onClick={() => {
-                setMainContent("Add");
-                setShowMainPage(true);
-              }}
-            >
-              + Add Task
-            </button>
-          </div>
-          {todoIsLoading && (
-            <CustomSpinner size={20} borderColor="blue" borderWidth={3} />
-          )}
-          {!todoIsLoading && (
-            <ul className="pl-0 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 w-[100%] gap-3">
-              {todoList.map((each) => {
-                return (
-                  <TodoItem
-                    key={each._id}
-                    todoItem={each}
-                    statusList={statusList}
-                    setMainContent={setMainContent}
-                    setShowMainPage={setShowMainPage}
-                    setInputHandler={setInputHandle}
-                  />
-                );
-              })}
-            </ul>
-          )}
+      <div className="pt-5 w-full">
+        <div className="mb-4 flex justify-between items-center">
+          <h1 className="text-slate-900 text-[roboto] font-medium">
+            TODOLIST:
+          </h1>
+          <button
+            type="button"
+            className="px-5 py-2 bg-blue-600 font-sans text-white text-[roboto] rounded-lg flex items-center"
+            onClick={() => {
+              setMainContent("Add");
+              setShowMainPage(true);
+            }}
+          >
+            + Add Task
+          </button>
         </div>
-      )}
+
+        {todoList.length === 0 && <EmptyList />}
+        {todoList.length > 0 && (
+          <div>
+            {todoIsLoading && (
+              <CustomSpinner size={20} borderColor="blue" borderWidth={3} />
+            )}
+            {!todoIsLoading && (
+              <ul className="pl-0 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 w-[100%] gap-3">
+                {todoList.map((each) => {
+                  return (
+                    <TodoItem
+                      key={each._id}
+                      todoItem={each}
+                      statusList={statusList}
+                      setMainContent={setMainContent}
+                      setShowMainPage={setShowMainPage}
+                      setInputHandler={setInputHandle}
+                    />
+                  );
+                })}
+              </ul>
+            )}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
