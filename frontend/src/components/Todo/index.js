@@ -42,11 +42,6 @@ const Todo = () => {
   const navigate = useNavigate();
   const jwtToken = Cookies.get("jwt_token");
 
-  useEffect(() => {
-    if (jwtToken === undefined) {
-      navigate("/login");
-    }
-  });
 
   const getTodoList = async () => {
     const userId = localStorage.getItem("user_id");
@@ -72,10 +67,13 @@ const Todo = () => {
     };
 
   useEffect(() => {
-    
+
+    if (jwtToken === undefined) {
+      navigate("/login");
+    }    
 
     getTodoList();
-  });
+  }, []);
 
   const userId = localStorage.getItem("user_id");
 
