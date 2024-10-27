@@ -155,7 +155,7 @@ const Todo = () => {
 
     if (response.ok === true) {
       setShowErrorMsg("");
-      setInputHandle({ title: "", description: "", status: " " });
+      setInputHandle({ title: "", description: "", status: "" });
       toast.success(data.message);
     } else {
       setShowErrorMsg(data.message);
