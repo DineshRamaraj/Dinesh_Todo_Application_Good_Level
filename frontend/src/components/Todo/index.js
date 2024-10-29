@@ -83,9 +83,11 @@ const Todo = () => {
 
     const userDetails = {
       title: inputHandle.title,
-      description: inputHandle.description,
+      description: inputHandle.description || "This is My Description",
       status: inputHandle.status,
     };
+
+    console.log(userDetails)
 
     // console.log(jwtToken);
 

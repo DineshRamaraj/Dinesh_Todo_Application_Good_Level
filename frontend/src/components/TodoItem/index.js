@@ -56,7 +56,7 @@ const TodoItem = ({
               status === "Pending"
                 ? "rounded-full bg-red-600"
                 : status === "Progress"
-                ? "rounded-full bg-yellow-600"
+                ? "rounded-full bg-yellow-400"
                 : "rounded-full bg-green-600"
             } p-1 mr-1`}
           ></span>
