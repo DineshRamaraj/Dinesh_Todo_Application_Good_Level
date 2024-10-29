@@ -42,36 +42,36 @@ const Todo = () => {
   const navigate = useNavigate();
   const jwtToken = Cookies.get("jwt_token");
 
-  const getTodoList = async () => {
-    const userId = localStorage.getItem("user_id");
+  useEffect(() => {
+    const getTodoList = async () => {
+      const userId = localStorage.getItem("user_id");
 
-    setTodoIsLoading(false);
-    const apiUrl = `https://dintodoapi.onrender.com/api/${userId}/todo`;
+      setTodoIsLoading(false);
+      const apiUrl = `https://dintodoapi.onrender.com/api/${userId}/todo`;
 
-    const options = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${jwtToken}`,
-      },
+      const options = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${jwtToken}`,
+        },
+      };
+
+      const response = await fetch(apiUrl, options);
+      const data = await response.json();
+
+      if (response.ok === true) {
+        setTodoList(data.todo_list);
+      }
+      setTodoIsLoading(false);
     };
 
-    const response = await fetch(apiUrl, options);
-    const data = await response.json();
-
-    if (response.ok === true) {
-      setTodoList(data.todo_list);
-    }
-    setTodoIsLoading(false);
-  };
-
-  useEffect(() => {
     if (jwtToken === undefined) {
       navigate("/login");
     }
 
     getTodoList();
-  }, []);
+  }, [isLoading, navigate, jwtToken]);
 
   const userId = localStorage.getItem("user_id");
 
@@ -195,7 +195,7 @@ const Todo = () => {
   };
 
   return (
-    <div className="relative min-h-[calc(100vh-50px)] flex flex-col justify-center items-center px-5 md:px-20 py-5">
+    <div className="relative min-h-[calc(100vh-50px)] flex flex-col items-center px-5 md:px-20 py-5">
       {showMainPage && (mainContent === "Add" || mainContent === "Update") && (
         <div
           className={`${
@@ -375,8 +375,6 @@ const Todo = () => {
             + Add Task
           </button>
         </div>
-
-        {todoList.length === 0 && <EmptyList />}
         {todoList.length > 0 && (
           <div>
             {todoIsLoading && (
@@ -400,6 +398,8 @@ const Todo = () => {
             )}
           </div>
         )}
+        
+        {todoList.length === 0 && <EmptyList />}
       </div>
     </div>
   );

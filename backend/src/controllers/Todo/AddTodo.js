@@ -2,8 +2,8 @@ const TodoModel = require("../../models/TodoModel");
 
 const AddTodo = async (req, res) => {
   const { user_id } = req.params;
-  // console.log(req.body);
-  const { title, description, status = "pending" } = req.body;
+  console.log(req.body);
+  const { title, description="This is My Description", status="Pending" } = req.body;
   try {
     if (title.length < 3 || title === "") {
       return res.status(404).json({ message: "Invalid Title" });
