@@ -100,15 +100,25 @@ todo-app/
 │   ├── .env                # Frontend environment variables
 │   └── package.json
 └── README.md
+
 API Endpoints
+
 Todo Endpoints
+
 GET /api/todos - Get all todos
+
 POST /api/todos - Add a new todo
+
 PUT /api/todos/:id - Update an existing todo
-DELETE /api/todos/:id - Delete a todo
-Usage
+
+DELETE /api/todos/:id - Delete a todo Usage
+
 Open http://localhost:3000 in your browser.
+
 Use the interface to add, edit, and delete tasks.
+
 Troubleshooting
+
 Ensure MongoDB is running and the connection URI is correct in the .env file.
+
 Verify that both the frontend and backend servers are running on their respective ports.
